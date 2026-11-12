@@ -1,0 +1,42 @@
+<html>
+<head>
+<title></title>
+</head>
+<body>
+<form>
+    <a href="{%url 'logout'%}" style="float: right;">Logout</a>
+{%csrf_token%}
+    welcome {{did}}<br/>
+    <table border="2">
+        <tr>
+            <td>Doctor Id</td>
+            <td>Doctor Name</td>
+            <td>User Name</td>
+            <td>Password</td>
+            <td>Gender</td>
+            <td>Speciality</td>
+            <td>Designation</td>
+            <td>Phone</td>
+            <td>Email</td>
+            <td>Address</td>
+            </tr>
+        {%for s in doctorlist%}
+        <tr>
+            <td>{{s.did}}</td>
+            <td>{{s.dname}}</td>
+            <td>{{s.uname}}</td>
+            <td>{{s.pwd}}</td>
+            <td>{{s.gender}}</td>
+            <td>{{s.speciality}}</td>
+            <td>{{s.designation}}</td>
+            <td>{{s.phone}}</td>
+            <td>{{s.email}}</td>
+            <td>{{s.address}}</td>
+            </tr>
+        {%endfor%}
+    </table>
+</form>
+</body>
+</html>
+
+

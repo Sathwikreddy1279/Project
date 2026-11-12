@@ -1,0 +1,177 @@
+{% load static %}
+<html>
+<head>
+<title></title>
+<link href="{% static 'external.css' %}" rel='stylesheet'/> 
+<style>
+/* Apply a basic reset to remove default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Style the body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Style the form container */
+#form-container {
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  padding: 20px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+/* Style form headers */
+#form-container h2 {
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+/* Style input fields and labels */
+#form-container input[type='text'],
+#form-container input[type='password'],
+#form-container select,
+#form-container textarea {
+  width: 100%;
+  padding: 4px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style the logo image */
+#logo-img {
+  width: 50px;
+  height: 50px;
+}
+
+</style>
+
+  <script>
+    function validate() {
+      var password = document.getElementById('pwd').value;
+      var passwordStrengthMessage = document.getElementById('password-strength');
+      var strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (!strongPasswordRegex.test(password)) {
+        passwordStrengthMessage.innerText = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, $, !, %, *, ?, or &).";
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+<div id="form-container">
+  <img src="{%static 'img/logo.png'%}" id="logo-img" alt="Logo"/>
+  <h2>Registration Page</h2>
+  <form id='f1' method="POST">
+    <!-- <img src="{%static 'logo.png'%}" width="200" height="200" alt=""/> -->
+    {% csrf_token %}
+    <!-- Rest of your form content goes here -->
+
+	<table border='2' align='center' >
+<tr>
+<td class='kits'>First Name</td>
+<td>
+<input type='text' id='fn' name='fn'/>
+</td>
+</tr>
+<tr>
+<td class='exstyle'>User Name</td>
+<td>
+<input type='text' id='un' name='un'/>
+</td>
+</tr>
+<tr>
+          <td class='kits'>Password</td>
+          <td>
+            <input type='password' id='pwd' name='pwd' onkeyup="validatePasswordStrength()"/>
+            <p id="password-strength"></p>
+          </td>
+        </tr>
+<tr>
+<td>Confirm Password</td>
+<td>
+<input type='password' id='cpwd' name='cpwd'/>
+</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>
+<input type='radio' id='male' value="male" name='gender'/>Male
+<input type='radio' id='female' value="female" name='gender'/>Female
+<input type="text" id="gselected" name="gselected" style="display: none;" />
+</td>
+</tr>
+<tr>
+<td class='phone'>phone number</td>
+<td><input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" required><br>
+</td>
+</tr>
+<tr>
+<tr>
+<td class='exstyle'>Email</td>
+<td>
+<input type='text' id='e' name='e'/>
+</td>
+</tr>
+<tr>
+<td>Medical issuse before</td>
+<td>
+<input type='checkbox' value='BP' id='BP' name='MI'/>BP<br/>
+<input type='checkbox' value='Sugar'id='Sugar' name='MI'/>Sugar<br/>
+<input type='checkbox' value='other issuse' id='others' name='MI'/>other issuse
+<input type="text" id="hselected" name="hselected" style="display: none;" />
+</td>
+</tr>
+<tr>
+<td>Address</td>
+<td>
+<textarea id='address' name='address' cols='20' rows="5" >
+</textarea>
+</td>
+</tr>
+<tr>
+	<td colspan="2">
+		<a href="{%url 'login'%}">Already user? Sign in</a>
+	</td>
+</tr>
+<tr>
+<td>
+<input type='submit' onclick='return validate()' id='b1' name='b1' value='Submit'/>
+</td>
+<td>
+<input type='button' onclick='clearfields()' id='b2' name='b2' value='clear'/>
+</td>
+</tr>
+</table>
+  </form>
+</div>
+<script>
+    function validatePasswordStrength() {
+      var password = document.getElementById('pwd').value;
+      var passwordStrengthMessage = document.getElementById('password-strength');
+      var strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      if (strongPasswordRegex.test(password)) {
+        passwordStrengthMessage.innerText = "Password strength: Strong";
+        passwordStrengthMessage.style.color = "#00ff00";
+      } else {
+        passwordStrengthMessage.innerText = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, $, !, %, *, ?, or &).";
+        passwordStrengthMessage.style.color = "#ff0000";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!-- appointments/templates/appointments/appointment_list.html -->
+<html>
+<head>
+    <title>Appointment List</title>
+</head>
+<body>
+    <h1>Appointment List</h1>
+    <ul>
+        {% for appointment in appointments %}
+            <li>{{ appointment.appoint_id }} - {{ appointment.appointment_date }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

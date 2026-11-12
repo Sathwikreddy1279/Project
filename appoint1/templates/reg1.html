@@ -1,0 +1,182 @@
+{%load static%}
+<html>
+<head>
+<title></title>
+<link href="{%static 'external.css' %}" rel='StyleSheet'/>
+<script type='text/javascript'>
+function validate(){
+var f=document.getElementById("fn").value;
+if(f==""){
+alert("Please enter first name");
+return false;
+}
+var un=document.getElementById("un").value;
+if(un==""){
+alert("Please enter user name");
+return false;
+}
+var p=document.getElementById("pwd").value;
+if(p==""){
+alert("Please enter password");
+return false;
+}
+var g=document.getElementsByName("gender");
+var val="";
+for(var i=0;i<g.length;i++)
+{
+   if(g[i].checked==true){
+	val=g[i].value;
+	break;
+	}
+}
+if(val=="")
+{
+alert("Please select gender");
+return false;
+}
+document.getElementById('gselected').value=val;
+
+var b=document.getElementById("speciality").value;
+if(b=="Select"){
+alert("Please select speciality");
+return false;
+}
+var d=document.getElementById("d").value;
+if(d==""){
+alert("Please enter designation");
+return false;
+}
+var pn=document.getElementById("pn").value;
+if(pn==""){
+alert("Please enter phone number");
+return false;
+}
+var e=document.getElementById("e").value;
+if(pn==""){
+alert("Please enter email");
+return false;
+}
+}
+
+function clearfields()
+{
+//document.getElementById("fn").value="";
+var g=document.getElementsByName("gender");
+var val="";
+for(var i=0;i<g.length;i++)
+{
+   if(g[i].checked==true){
+	val=g[i].value;
+	break;
+	}
+}
+
+/*
+var x=document.getElementById("fn");
+x.value="";*/
+}
+</script>
+</head>
+<body>
+<form id='f1' method="POST">
+	<a href="{%url 'logout'%}" style="float: right;">Logout</a>
+	<!-- <img src="{%static 'logo.jpg'%}" width="200" height="200" alt=""/> -->
+	
+{%csrf_token%}
+	<table border='2' align='center' >
+<tr>
+<td id='errormsg' colspan='2'>
+
+</td>
+</tr>
+
+
+<tr>
+<td colspan="2" align='center'>Registration Page</td>
+</tr>
+<tr>
+<td class='kits'>First Name</td>
+<td>
+<input type='text' id='fn' name='fn'/>
+</td>
+</tr>
+<tr>
+<td class='exstyle'>User Name</td>
+<td>
+<input type='text' id='un' name='un'/>
+</td>
+</tr>
+<tr>
+<td class='kits'>Password</td>
+<td>
+<input type='password' id='pwd' name='pwd'/>
+</td>
+</tr>
+<tr>
+<td>Confirm Password</td>
+<td>
+<input type='password' id='cpwd' name='cpwd'/>
+</td>
+</tr>
+<tr>
+<td>Gender</td>
+<td>
+<input type='radio' id='male' value="male" name='gender'/>Male
+<input type='radio' id='female' value="female" name='gender'/>Female
+<input type="text" id="gselected" name="gselected" style="display: none;" />
+</td>
+</tr>
+<tr>
+	<td>speciality
+	<td>
+		<select id='speciality' name='speciality'>
+		<option>Select</option>
+		<option>critical care</option>
+		<option>general physician</option>
+		<option>orthopedic</option>
+		<option>gynecologist</option>
+		<option>Others</option>
+		</select>
+		</td>
+	</td>
+</tr>
+<tr>
+	<td>designation	</td>
+	<td><input type="text" id="dg" name="dg"></td>
+</tr>
+<tr>
+<td class='phone'>phone number</td>
+<td><input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="Enter 10-digit phone number" required><br>
+</td>
+</tr>
+<tr>
+<tr>
+<td class='exstyle'>Email</td>
+<td>
+<input type='text' id='e' name='e'/>
+</td>
+</tr>
+<tr>
+<td>Address</td>
+<td>
+<textarea id='address' name='address' cols='20' rows="5" >
+</textarea>
+</td>
+</tr>
+<tr>
+	<td colspan="2">
+		<a href="{%url 'login'%}">Already user? Sign in</a>
+	</td>
+</tr>
+<tr>
+<td>
+<input type='submit' onclick='return validate()' id='b1' name='b1' value='Submit'/>
+</td>
+<td>
+<input type='button' onclick='clearfields()' id='b2' name='b2' value='clear'/>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Razorpay Checkout</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<div class="payment-container">
+    <h2>Razorpay Payment</h2>
+    <div class="amount">₹500.00</div>
+
+    <button id="pay-btn">Pay Now</button>
+
+    <div class="payment-status" id="payment-status"></div>
+</div>
+
+<script>
+document.getElementById("pay-btn").onclick = function () {
+
+    // STEP 1: Call backend to create order
+    fetch("{% url 'razorpay_create_order' %}")
+    .then(response => response.json())
+    .then(data => {
+
+        var options = {
+            "key": data.key,              // Razorpay Key ID
+            "amount": data.amount,        // Amount in paise
+            "currency": "INR",
+            "name": "My Store",
+            "description": "Order Payment",
+            "order_id": data.order_id,    // Order ID from backend
+
+            "handler": function (response) {
+                // STEP 2: Verify payment on backend
+                fetch("{% url 'razorpay_verify' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body:
+                        "razorpay_payment_id=" + response.razorpay_payment_id +
+                        "&razorpay_order_id=" + response.razorpay_order_id +
+                        "&razorpay_signature=" + response.razorpay_signature
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.status === "success") {
+                        document.getElementById("payment-status").innerText =
+                            "✅ Payment Successful!";
+                    } else {
+                        document.getElementById("payment-status").innerText =
+                            "❌ Payment verification failed!";
+                    }
+                });
+            },
+
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.open();
+    });
+};
+</script>
+
+</body>
+</html>

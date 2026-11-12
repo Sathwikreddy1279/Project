@@ -1,0 +1,49 @@
+</head>
+<body>
+    <form id='f1' method="POST">
+        {% csrf_token %}
+        <table border='2' align='center'>
+            <tr>
+                <td class='exstyle'>Appointment Id</td>
+                <td>
+                    <input type='text' readonly id='appoint_id' name='appoint_id' value="{{appointments.appoint_id}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class='exstyle'>Doctor Name</td>
+                <td>
+                    <input type='text' id='fn' name='fn' value="{{appointments.dname}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class='exstyle'>Appointment Date</td>
+                <td>
+                    <input type='text' id='date' name='date' value="{{appointments.appointment_date}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class='exstyle'>Appointment Time</td>
+                <td>
+                    <input type='text' id='time' name='time' value="{{appointments.appointment_time}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class='exstyle'>Patient Name</td>
+                <td>
+                    <input type='text' id='name' name='name' value="{{appointments.pname}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type='submit' id='b1' name='b1' value='Update'/>
+                </td>
+                <td>
+                    <input type='button' id='b3' name='b3' value='Clear'/>
+                </td>
+            </tr>
+        </table>
+    </form>
+   
+    <!-- Form Sec
+</body>
+</html>

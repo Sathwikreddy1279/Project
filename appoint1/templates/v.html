@@ -1,0 +1,125 @@
+from django.shortcuts import render,redirect
+
+# Create your views here.
+from django.http import HttpRequest,HttpResponse
+import mysql.connector
+def home(request):
+    return render(request,'home.html')
+def main(request):
+    return render(request,'main.html')
+def index(request):
+
+    if(request.method=="POST"):
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="doctor appointment"
+        )
+        fname=request.POST['fn']
+        uname=request.POST['un']
+        pwd=request.POST['pwd']
+        gender=request.POST['gselected']
+        phone=request.POST['phone']
+        email=request.POST['e']
+        meb=request.POST['hselected']
+        address=request.POST['address']
+        mycursor = conn.cursor()
+        mycursor.execute("insert into patients(pname,uname,pwd,gender,phone,email,MI,address) values('"+fname+"','"+uname+"','"+pwd+"','"+gender+"', '"+phone+"','"+email+"', '"+meb+"','"+address+"')")
+        conn.commit()    
+        return render(request,"user.html",{"status":"you can login"})
+    else:
+        return render(request,'reg.html')
+def login(request):
+    if(request.method=="POST"):
+        uname=request.POST['un']
+        pwd=request.POST['pwd']
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="doctor appoint"
+        )
+        mycursor = conn.cursor()
+        mycursor.execute("select * from patients where uname='"+uname+"' and pwd='"+pwd+"'")
+        result=mycursor.fetchone()
+        if(result!=None):
+            request.session["username"]=uname
+            return redirect('index')
+        else:
+            return render(request,"user.html",{"status":"invalid credentials"})
+    else:
+        return render(request,'user.html')    
+def index1(request):
+
+    if(request.method=="POST"):
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="doctor appointment"
+        )
+        fname=request.POST['fn']
+        uname=request.POST['un']
+        pwd=request.POST['pwd']
+        gender=request.POST['gselected']
+        speciality=request.POST['speciality']
+        designation=request.POST['designation']
+        phone=request.POST['phone']
+        email=request.POST['e']
+        address=request.POST['address']
+        mycursor = conn.cursor()
+        mycursor.execute("insert into doctor(dname,uname,pwd,gender, speciality,designation,phone,email,address) values('"+fname+"','"+uname+"','"+pwd+"','"+gender+"','"+speciality+"','"+designation+ "','"+phone+"','"+email+"','"+address+"')")
+        conn.commit()    
+        return render(request,"doctor.html",{"status":"you can login"})
+    else:
+        return render(request,'reg1.html')
+def login1(request):
+    if(request.method=="POST"):
+        uname=request.POST['un']
+        pwd=request.POST['pwd']
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="doctor appoint"
+        )
+        mycursor = conn.cursor()
+        mycursor.execute("select * from doctor where uname='"+uname+"' and pwd='"+pwd+"'")
+        result=mycursor.fetchone()
+        if(result!=None):
+            request.session["username"]=uname
+            return redirect('index1')
+        else:
+            return render(request,"doctor.html",{"status":"invalid credentials"})
+    else:
+        return render(request,'doctor.html')    
+def login2(request):
+    if(request.method=="POST"):
+        uname=request.POST['un']
+        pwd=request.POST['pwd']
+        conn = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="doctor appoint"
+        )
+        mycursor = conn.cursor()
+        mycursor.execute("select * from admin where uname='"+uname+"' and pwd='"+pwd+"'")
+        result=mycursor.fetchone()
+        if(resu
+        lt!=None):
+            request.session["username"]=uname
+            return redirect('admin')
+        else:
+            return render(request,"admin.html",{"status":"invalid credentials"})
+    else:
+        return render(request,'admin.html')    
+
+def logout(request):
+        try:
+            if(request.session['username']!=None):
+                 del request.session["username"]
+        except KeyError:
+            pass
+        return redirect('index')

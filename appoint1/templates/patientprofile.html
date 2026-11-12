@@ -1,0 +1,142 @@
+<html>
+<head>
+<title></title>
+<style>
+/* Apply a basic reset to remove default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+    
+/* Style the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+        
+/* Style the logout link */
+a {
+  float: right;
+  text-decoration: none;
+  margin-right: 20px;
+  color: #3498db;
+}
+        
+/* Style the welcome message */
+#welcome-msg {
+    font-size: 24px;
+    margin-top: 20px;
+}
+        
+/* Style the table */
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+        
+/* Style table headings */
+th {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    }
+        
+/* Style table rows */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+        
+/* Style table cells */
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+        
+/* Style the table headers */
+td:first-child {
+    font-weight: bold;
+    width: 30%;
+}
+        
+/* Style doctor's name and username */
+#patient-name, #patient-username {
+    font-weight: bold;
+    width:30%;
+}
+        
+/* Style the table header for the doctor's information */
+#patient-info-header {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+}
+</style>
+</head>
+<body>
+<form>
+    <a href="{%url 'logout'%}" style="float: right;">Logout</a>
+{%csrf_token%}
+    welcome{{uname}}<br/>
+    <table border="2" align="center">
+    
+   
+        {%for s in patientlist%}
+            <tr>
+                <td>Patient Id
+                <td>{{s.pid}}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>Patient Name
+                <td>{{s.pname}}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>User Name
+                <td>{{s.uname}}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>Password
+                <td>{{s.pwd}}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>Gender
+                <td>{{s.gender}}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>Phone
+                <td>{{s.phone}}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>Email
+                <td>{{s.email}}</td>
+                </td>
+            </tr>
+ 
+            <tr>
+                <td>Medical Issues Before
+                <td>{{s.MI}}</td>
+                </td>
+            </tr>
+            <tr>
+                <td>Address
+                <td>{{s.address}}</td>
+                </td>
+            </tr>
+        {%endfor%}
+    </table>
+</form>
+</body>
+</html>
+
+

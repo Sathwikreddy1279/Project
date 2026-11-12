@@ -1,0 +1,23 @@
+<!-- appointment_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment List</title>
+</head>
+<body>
+    <h1>Appointment List</h1>
+    <ul>
+        {% for appointment in appointments %}
+        <li>
+            {{ appointment.patient_name }} ({{ appointment.appointment_time }})
+            {% if not appointment.is_confirmed %}
+            <a href="{% url 'confirm_appointment' appoint_id %}">Confirm</a>
+            {% endif %}
+            {% if appointment.is_confirmed %}
+            <a href="{% url 'cancel_appointment' appoint_id %}">Cancel</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
